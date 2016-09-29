@@ -1,129 +1,57 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Coldbrew Cloud</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>COLDBREW CLOUD</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/github-light.css">
-    <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/github-light.css">
+        <meta name="viewport" content="width=device-width">
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
-    <script src="/js/api_status.js"></script>
-    <script src="/js/curl.js"></script>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h2>COLDBREW CLOUD API</h2>
-        <p>
-            <div>API Status: <span class="api-metrics" id="api-status">HEALTHY</span></div>
-            <div>API Tokens Created: <span class="api-metrics" id="api-token-count"</span></div>
-        </p>
-      </header>
-      <section>
-        <h3>Getting Started</h3>
-        <p>
-            To access the API, you need to get an API token first.
-            <div class="code run">
-                curl -X <em>POST</em> https://coldbrew.cloud/register
-                <a href="#" id="run-register" class="run-curl" data-method="POST" data-path="/register">TEST</a>
-                <div id="run-register-result" class="run-curl-result"></div>
-            </div>
-        </p>
-        <p>
-            You can pass the token as a query param ("token") or through HTTP basic auth header ("Authorization").
-            <div class="code">
-                <div># as query param</div>
-                <div>curl https://coldbrew.cloud/kv/foo?<em>token={TOKEN}</em></div>
-                <div>&nbsp;</div>
-                <div># as basic auth header (password should be empty)</div>
-                <div>curl -u "<em>{TOKEN}</em>:" https://coldbrew.cloud/kv/foo</div>
-            </div>
-        </p>
-        <p>&nbsp;</p>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+        <script src="/js/api_status.js"></script>
+        <script src="/js/curl.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>COLDBREW CLOUD</h1>
+            </header>
+            <section>
+                <h2>Products and Services</h2>
 
-        <h3>Key-Value Store</h3>
+                <p>
+                    <ul>
+                        <li>
+                            <a href="//shiplabelapp.coldbrewcloud.com/">Ship Label App</a>: iOS app that lets you purchase the shipping labels from major carriers
+                        </li>
+                        <li>
+                            <a href="/api"><span class="coldbrew-cloud">coldbrew.cloud</span> API</a>: key-value store API
+                        </li>
+                        <li>
+                            <span class="coldbrew-cloud">coldbrew.cloud</span> (closed beta): container-based managed hosting solution for backend applications
+                        </li>
+                    </ul>
+                </p>
 
-        <h4>Setting Value</h4>
-        <p>
-            To create or update a key-value pair:
-            <div class="code">curl -X <em>PUT</em> -d <span class="placeholder">{value}</span> https://coldbrew.cloud/kv/<span class="placeholder">{key}</span>?token=<span class="placeholder">{TOKEN}</span></div>
-        </p>
-        <p>
-            <ul>
-                <li>Key must consist of alphanumeric, dash, or underline characters.</li>
-                <li>Key cannot exceed 200 characters.</li>
-                <li>Value cannot exceed 20,000 characters.</li>
-                <li>If you specify "Content-Type" in request header, the same "Content-Type" will be used in response header when retrieving the key.</li>
-                <li>Status [200]: key-value pair was successfully created or updated.</li>
-                <li>Status [401]: API key is missing or is not registered.</li>
-            </ul>
-        </p>
-        <p>
-            Example:
-            <div class="code run">
-                curl -X <em>PUT</em> -d "<span class="placeholder kv-value">bar</span>" https://coldbrew.cloud/kv/<span class="placeholder kv-key">foo</span>?token=<span class="placeholder api-token">564b53e66c6639017737e2ee77da971da123bcd2e79b46a6516c8e62c60bb357</span>
-                <a href="#" id="run-kv-set1" class="run-curl run-curl-kv run-curl-kv-set" data-method="PUT" data-path="/kv/foo" data-body="bar">TEST</a>
-                <div id="run-kv-set1-result" class="run-curl-result"></div>
-            </div>
-        </p>
-
-        <h4>Getting Value</h4>
-        <p>
-            To retrieve a key-value pair:
-            <div class="code">curl -X <em>GET</em> https://coldbrew.cloud/kv/<span class="placeholder">{key}</span>?token=<span class="placeholder">{TOKEN}</span></div>
-        </p>
-        <p>
-            <ul>
-                <li>Key must consist of alphanumeric, dash, or underline characters.</li>
-                <li>Key cannot exceed 200 characters.</li>
-                <li>Status [200]: key-value pair was successfully retrieved.</li>
-                <li>Status [401]: API key is missing or is not registered.</li>
-                <li>Status [404]: Key is not found.</li>
-            </ul>
-        </p>
-        <p>
-            Example:
-            <div class="code run">
-                curl -X <em>GET</em> https://coldbrew.cloud/kv/<span class="placeholder kv-key">foo</span>?token=<span class="placeholder api-token">564b53e66c6639017737e2ee77da971da123bcd2e79b46a6516c8e62c60bb357</span>
-                <a href="#" id="run-kv-get1" class="run-curl run-curl-kv" data-method="GET" data-path="/kv/foo">TEST</a>
-                <div id="run-kv-get1-result" class="run-curl-result"></div>
-            </div>
-        </p>
-
-        <h4>Deleting Value</h4>
-        <p>
-            To delete a key-value pair:
-            <div class="code">curl -X <em>DELETE</em> https://coldbrew.cloud/kv/<span class="placeholder">{key}</span>?token=<span class="placeholder">{TOKEN}</span></div>
-        </p>
-        <p>
-            <ul>
-                <li>Key must consist of alphanumeric, dash, or underline characters.</li>
-                <li>Key cannot exceed 200 characters.</li>
-                <li>Status [200]: key-value pair was successfully deleted.</li>
-                <li>Status [401]: API key is missing or is not registered.</li>
-                <li>Status [404]: Key is not found.</li>
-            </ul>
-        </p>
-        <p>
-            Example:
-            <div class="code run">
-                curl -X <em>DELETE</em> https://coldbrew.cloud/kv/<span class="placeholder kv-key">foo</span>?token=<span class="placeholder api-token">564b53e66c6639017737e2ee77da971da123bcd2e79b46a6516c8e62c60bb357</span>
-                <a href="#" id="run-kv-delete1" class="run-curl run-curl-kv" data-method="DELETE" data-path="/kv/foo">TEST</a>
-                <div id="run-kv-delete1-result" class="run-curl-result"></div>
-            </div>
-        </p>
-      </section>
-      <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="js/scale.fix.js"></script>
-  </body>
+                <h2>Contact Us</h2>
+                <p>
+                    <ul>
+                        <li>
+                            Email: <a href="mailto:info@coldbrewcloud.com">info@coldbrewcloud.com</a>
+                        </li>
+                    </ul>
+                </p>
+            </section>
+            <footer>
+                <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </footer>
+        </div>
+        <script src="js/scale.fix.js"></script>
+    </body>
 </html>
