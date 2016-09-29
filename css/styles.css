@@ -27,6 +27,13 @@ h2 {
   color:#393939;
 }
 
+h2 span {
+    padding-top: 10px;
+    display: block;
+    font-size: 14px;
+    color: #33333;
+}
+
 h3, h4, h5, h6 {
   color:#494949;
 }
@@ -103,6 +110,13 @@ th {
 
 img {
   max-width:100%;
+}
+
+img.app-screen {
+    max-width: 270px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 header {
