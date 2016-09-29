@@ -1,7 +1,6 @@
 (function($) {
-    //var apiURL = "https://coldbrew.cloud";
-    var apiURL = "http://localhost:9000";
-
+    var apiURL = "https://coldbrew.cloud";
+    
     function randomWord(fn) {
         $.ajax("http://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5").then(function(data) {
             fn(data.word || "foo");
